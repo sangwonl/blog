@@ -1,12 +1,13 @@
 ---
-/* 
+/*
   Not a layout. Just a component used in layouts.
 */
+const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
 ---
 <meta name="theme-color" content="#ffffff" />
 
-<!-- 
-  This is an example. 
-  Use https://realfavicongenerator.net to generate the icons and manifest. 
+<!--
+  This is an example.
+  Use https://realfavicongenerator.net to generate the icons and manifest.
 -->
-<link href="/favicon.ico" rel="shortcut icon" />
+<link href={`${base}/favicon.ico`} rel="shortcut icon" />

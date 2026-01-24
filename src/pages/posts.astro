@@ -5,6 +5,8 @@ import PageLayout from "../layouts/PageLayout.astro";
 import PageMeta from "../components/PageMeta.astro";
 import { SITE_TITLE } from "../config";
 
+const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
+
 const posts = await readAll({
   directory: "posts",
   frontmatterSchema: blog,
@@ -48,7 +50,7 @@ const sortedPosts = posts
                   </a>
                 ) : (
                   <a
-                    href={`/posts/${post.slug}`}
+                    href={`${base}/posts/${post.slug}`}
                     class="unset hover:text-text-link"
                   >
                     {post.frontmatter.title}

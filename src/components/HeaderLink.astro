@@ -1,8 +1,10 @@
 ---
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
 
+const base = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
 const { href, class: className, ...props } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "");
+const fullHref = href === "/" ? (base || "/") : `${base}${href}`;
 
 const isHome = href === '/' && path === '';
 const isOtherPages = typeof href === "string" && href.length > 1
@@ -13,7 +15,7 @@ const isActive = isHome || isOtherPages
 ---
 <!-- DO NOT FORMAT. IT ADDS AN EXTRA SPACE ON RENDERED CONTENT. -->
 <a
-  href={href}
+  href={fullHref}
   class:list={[
     className,
     { "show": isActive },
