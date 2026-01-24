@@ -98,6 +98,13 @@ export const config: Config = {
       },
       selfClosing: true,
     },
+    video: {
+      render: "VideoEmbed",
+      attributes: {
+        src: { type: String, required: true },
+      },
+      selfClosing: true,
+    },
   },
   nodes: {
     heading: {

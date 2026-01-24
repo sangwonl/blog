@@ -6,7 +6,7 @@ import PageMeta from "../components/PageMeta.astro";
 import { SITE_TITLE } from "../config";
 
 const posts = await readAll({
-  directory: "blog",
+  directory: "posts",
   frontmatterSchema: blog,
 });
 
@@ -48,7 +48,7 @@ const sortedPosts = posts
                   </a>
                 ) : (
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={`/posts/${post.slug}`}
                     class="unset hover:text-text-link"
                   >
                     {post.frontmatter.title}

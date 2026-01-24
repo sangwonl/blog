@@ -18,7 +18,7 @@
   woff/woff2 assets downloaded using google-webfonts-helper:
   https://gwfh.mranftl.com/fonts/open-sans?subsets=latin
 */
-const base = import.meta.env.BASE_URL || "";
+const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
 ---
 
 <!--

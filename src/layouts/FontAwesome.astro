@@ -20,7 +20,7 @@
   and instead use the full fontawesome(or)brands.min.css stylesheets.
 
 */
-const base = import.meta.env.BASE_URL || "";
+const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
 ---
 
 <Fragment>

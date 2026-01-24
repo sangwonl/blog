@@ -1,0 +1,13 @@
+---
+type Props = {
+  src: string;
+};
+
+const { src } = Astro.props;
+---
+
+<div>
+  <video controls playsinline class="w-full max-w-2xl">
+    <source src={src} type="video/mp4" />
+  </video>
+</div>

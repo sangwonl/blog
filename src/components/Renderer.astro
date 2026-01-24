@@ -5,6 +5,7 @@ import YouTubeEmbed from "./YouTubeEmbed.astro";
 import TweetEmbed from "./TweetEmbed.astro";
 import CodePenEmbed from "./CodePenEmbed.astro";
 import GitHubGistEmbed from "./GitHubGistEmbed.astro";
+import VideoEmbed from "./VideoEmbed.astro";
 import CodeBlock from "./CodeBlock.astro";
 import Heading from "./Heading.astro";
 
@@ -37,6 +38,10 @@ const components = {
   },
   GitHubGistEmbed: {
     Component: GitHubGistEmbed,
+    props: {},
+  },
+  VideoEmbed: {
+    Component: VideoEmbed,
     props: {},
   },
 };
