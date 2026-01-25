@@ -3,6 +3,8 @@ import type { Config } from "@markdoc/markdoc";
 
 const { nodes, Tag } = Markdoc;
 
+const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
+
 /*
   Markdoc is a great tool to author content in Markdown.
   It supports all default markdown syntax and allows you 
@@ -129,6 +131,23 @@ export const config: Config = {
     //     return new Tag(this.render, { ...attributes }, children);
     //   },
     // },
+    image: {
+      render: "img",
+      attributes: {
+        src: { type: String, required: true },
+        alt: { type: String },
+        title: { type: String },
+      },
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const src = attributes.src as string;
+        // Prepend base URL for absolute paths
+        if (src.startsWith("/")) {
+          attributes.src = `${base}${src}`;
+        }
+        return new Tag(this.render, attributes, []);
+      },
+    },
     fence: {
       render: "CodeBlock",
       attributes: {
