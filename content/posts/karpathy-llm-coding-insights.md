@@ -4,6 +4,7 @@ draft: false
 title: Andrej Karpathy가 말하는 LLM 코딩의 현재
 description: Andrej Karpathy의 트윗을 통해 본 LLM 코딩 에이전트의 현실과 미래. 80% 에이전트 코딩 시대, 우리는 무엇을 얻고 무엇을 잃는가.
 date: 2026-01-27
+tags: ["LLM", "AI", "코딩에이전트"]
 ---
 
 요즘 Claude Code를 쓰면서 코딩하는 방식이 많이 바뀌었다는 걸 체감하고 있었는데, 마침 Andrej Karpathy가 최근 LLM 코딩에 대한 생각을 길게 [트윗](https://x.com/karpathy/status/2015883857489522876?s=20)으로 남겼다. OpenAI 창립 멤버이자 Tesla AI 디렉터 출신인 그의 시각이라 읽어볼 만했고, 공감되는 부분도 많았다. 주요 인사이트를 정리해본다.
@@ -50,7 +51,7 @@ LLM 도움의 "속도 향상"을 측정하기 어렵다고 한다. 단순히 빨
 1. 예전엔 코딩할 가치가 없던 것들도 이제 코딩한다
 2. 지식/스킬 부족으로 접근 못 했던 코드도 이제 다룬다
 
-그래서 이건 속도 향상(speedup)이라기보다 **확장(expansion)**에 가깝다는 것.
+그래서 이건 속도 향상(speedup)이라기보다 **확장(expansion)** 에 가깝다는 것.
 
 ### 레버리지 - 명령형에서 선언형으로
 
@@ -100,7 +101,7 @@ Karpathy가 던진 질문들도 생각해볼 만하다:
 
 > "LLM agent capabilities (Claude & Codex especially) have crossed some kind of threshold of coherence around December 2025 and caused a phase shift in software engineering."
 
-Karpathy의 결론은 이렇다. 2025년 12월쯤 LLM 에이전트(특히 Claude와 Codex)가 어떤 "일관성의 임계점"을 넘었고, 소프트웨어 엔지니어링에 **상전이**(phase shift)가 일어났다는 것.
+Karpathy의 결론은 이렇다. 2025년 12월쯤 LLM 에이전트(특히 Claude와 Codex)가 어떤 "일관성의 임계점"을 넘었고, 소프트웨어 엔지니어링에 **상전이(phase shift)** 가 일어났다는 것.
 
 지능 부분은 갑자기 많이 앞서나갔는데, 나머지 - 통합(도구, 지식), 새로운 조직 워크플로우, 프로세스, 확산 - 는 아직 따라오지 못하고 있다. 2026년은 업계가 이 새로운 능력을 소화하느라 고에너지 한 해가 될 것이라고.
 

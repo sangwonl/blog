@@ -4,6 +4,7 @@ draft: false
 title: 배경 제거(일명 누끼따기) 실험
 description: rembg와 U2-Net을 활용한 이미지 배경 제거 실험
 date: 2021-03-28
+tags: ["이미지처리", "딥러닝", "실험"]
 ---
 
 ## 배경

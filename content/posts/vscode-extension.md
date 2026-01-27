@@ -4,6 +4,7 @@ draft: false
 title: VS Code 코드 분석 (익스텐션 만들기)
 description: VS Code 익스텐션 개발을 위한 코드 분석과 간단한 익스텐션 만들기
 date: 2023-08-25
+tags: ["VSCode", "익스텐션", "개발도구"]
 ---
 
 ### 배경

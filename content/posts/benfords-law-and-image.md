@@ -4,6 +4,7 @@ draft: false
 title: 벤포드법칙(Benford's Law)과 이미지
 description: 벤포드 법칙을 활용한 이미지 위변조 탐지 가능성 탐구
 date: 2021-03-14
+tags: ["수학", "이미지", "탐구"]
 ---
 
 넷플릭스 <커넥티드 - 수의 법칙> 다큐를 보다가 벤포드의 법칙(Benford's Law)이라는게 있다는걸 알았다.

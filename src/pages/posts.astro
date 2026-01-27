@@ -56,6 +56,15 @@ const sortedPosts = posts
                     {post.frontmatter.title}
                   </a>
                 )}
+                {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                  <span class="ml-2">
+                    {post.frontmatter.tags.map((tag) => (
+                      <span class="inline-block text-xs bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded px-1.5 py-0.5 mr-1">
+                        {tag}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </div>
               <div class="text-text-muted text-sm italic">
                 <time datetime={post.frontmatter.date.toISOString()}>
