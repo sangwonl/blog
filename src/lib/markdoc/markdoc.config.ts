@@ -7,9 +7,9 @@ const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
 
 /*
   Markdoc is a great tool to author content in Markdown.
-  It supports all default markdown syntax and allows you 
+  It supports all default markdown syntax and allows you
   to configure and use custom syntax to render your own
-  components. 
+  components.
 
   This is how it works —
   1. It takes a config (this file)
@@ -18,11 +18,11 @@ const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
   4. We render the tree in Astro pages using astro-markdoc-renderer package
 */
 
-/* 
-  Markdoc config goes here. 
-  https://markdoc.dev/docs/config 
-  
-  - If you want to support a custom element, just 
+/*
+  Markdoc config goes here.
+  https://markdoc.dev/docs/config
+
+  - If you want to support a custom element, just
     add it config.tags (Eg. youtube). Once added here,
     you can use the custom component syntax in markdown files.
     Once added here, you can add an Astro component for it in
@@ -30,7 +30,7 @@ const base = (import.meta.env.BASE_URL || "").replace(/\/$/, "");
 
   - By default, the default markdown tags are automatically rendered
     in default html elements. Eg. # is rendered in <h1>, and paragraphs
-    are rendered in <p>. If you want to customize how default markdown 
+    are rendered in <p>. If you want to customize how default markdown
     elements are rendered, add a config for the element to `config.nodes`.
     This is not easy but we have already done it for headings so
     you can copy paste the code from nodes.heading into whichever tag you
@@ -106,6 +106,26 @@ export const config: Config = {
         src: { type: String, required: true },
       },
       selfClosing: true,
+    },
+    img: {
+      render: "img",
+      attributes: {
+        src: { type: String, required: true },
+        alt: { type: String },
+        width: { type: String },
+        height: { type: String },
+        style: { type: String },
+      },
+      selfClosing: true,
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const src = attributes.src as string;
+        // Prepend base URL for absolute paths
+        if (src.startsWith("/")) {
+          attributes.src = `${base}${src}`;
+        }
+        return new Tag(this.render, attributes, []);
+      },
     },
   },
   nodes: {
