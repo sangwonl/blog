@@ -1,33 +1,73 @@
 ---
+import { readAll } from "../lib/markdoc/read";
+import { project } from "../lib/markdoc/frontmatter.schema";
+
+const projects = await readAll({
+  directory: "projects",
+  frontmatterSchema: project,
+});
+
+const sortedProjects = projects
+  .filter((p) => p.frontmatter.draft !== true);
+
+const statusLabel: Record<string, string> = {
+  active: "Active",
+  archived: "Archived",
+  experiment: "Experiment",
+};
 ---
 
 <div>
-  <h2 class="font-bold text-xl mb-4">Side Projects</h2>
-  <ul class="space-y-4">
-    <li>
-      <strong><a href="https://cropmon.pineple.com" target="_blank" class="text-orange-500 hover:underline">CropMon</a></strong>
-      <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Typescript / Electron</span>
-      <p class="text-sm mt-1">간단하고 빠른 데스크톱 스크린 레코더. 시간 제한 없음, 워터마크 없음, 무료. MacOS/Windows 지원.</p>
-    </li>
-    <li>
-      <strong><a href="https://github.com/sangwonl/oraksil" target="_blank" class="text-orange-500 hover:underline">Oraksil</a></strong>
-      <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">C++ / Rust / Go / Typescript / React / WebRTC</span>
-      <p class="text-sm mt-1">Google Stadia에서 영감 받은 WebRTC 기반 스트리밍 게임 연구 프로젝트. MAME 레트로 게임 에뮬레이터 활용. <a href="https://bit.ly/3sOebwT" target="_blank" class="text-orange-500 hover:underline">FFMPEG libav 튜토리얼 한글 번역</a> 포함.</p>
-    </li>
-    <li>
-      <strong><a href="https://gamz.medium.com/%ec%88%98%ec%9c%a0%eb%93%b1-fc45dad93f35" target="_blank" class="text-orange-500 hover:underline">원클릭 수유등</a></strong>
-      <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">AWS IoT Button / Raspberry Pi / Hue / Node.js</span>
-      <p class="text-sm mt-1">아내와 아기를 위한 홈 IoT 토이 프로젝트. 원격 조명 스위치 + Google Sheet 자동 로깅.</p>
-    </li>
-    <li>
-      <strong><a href="https://github.com/sangwonl/stage34" target="_blank" class="text-orange-500 hover:underline">Stage34</a></strong>
-      <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Python (Django, Celery) / React / Docker</span>
-      <p class="text-sm mt-1">컨테이너(Docker) 연구 프로젝트. 새 기능의 독립적인 QA를 위한 확장 가능한 프리뷰 서버 프로비저너.</p>
-    </li>
-    <li>
-      <strong><a href="https://github.com/sangwonl/python-mpegdash" target="_blank" class="text-orange-500 hover:underline">MPEG-DASH MPD Parser</a></strong>
-      <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Python</span>
-      <p class="text-sm mt-1">MPEG-DASH MPD(Media Presentation Description) 파싱을 위한 오픈소스 라이브러리.</p>
-    </li>
-  </ul>
+  <h2 class="font-bold text-xl mb-6">My Projects</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      sortedProjects.map((project) => {
+        const fm = project.frontmatter;
+        const isArchived = fm.status === "archived";
+        return (
+          <a
+            href={fm.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "unset group block rounded-xl border p-4 transition-all duration-200",
+              "hover:shadow-md hover:-translate-y-0.5",
+              isArchived
+                ? "border-gray-200 dark:border-gray-700/50 opacity-75 hover:opacity-100"
+                : "border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-yellow-400/50",
+            ]}
+          >
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <h3 class="font-semibold text-text-heading group-hover:text-text-link transition-colors">
+                {fm.title}
+                <i class="ml-1 text-[10px] text-text-muted fa-solid fa-up-right-from-square" />
+              </h3>
+              <span
+                class:list={[
+                  "shrink-0 text-[11px] px-2 py-0.5 rounded-full font-medium",
+                  isArchived
+                    ? "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                    : "bg-orange-50 text-orange-600 dark:bg-yellow-400/10 dark:text-yellow-400",
+                ]}
+              >
+                {statusLabel[fm.status]}
+              </span>
+            </div>
+            {fm.description && (
+              <p class="text-sm text-text-muted mb-3 line-clamp-2">
+                {fm.description}
+              </p>
+            )}
+            <div class="flex flex-wrap gap-1.5">
+              {fm.stack.map((tech: string) => (
+                <span class="text-[11px] px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
 </div>
