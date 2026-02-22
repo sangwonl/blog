@@ -63,7 +63,9 @@ export async function read<T extends z.ZodTypeAny>({
   if (typeof filename !== "string") {
     throw new Error("Check what went wrong");
   }
-  const fileNameWithoutExtension = filename.replace(/\.[^.]*$/, "");
+  const fileNameWithoutExtension = filename
+    .replace(/\.[^.]*$/, "")
+    .replace(/^\d+-/, "");
 
   return {
     slug: fileNameWithoutExtension,
@@ -81,7 +83,11 @@ export async function readOne<T extends z.ZodTypeAny>({
   slug: string;
   frontmatterSchema: T;
 }) {
-  const filepath = path.join(contentDirectory, directory, `${slug}.md`);
+  const pathToDir = path.posix.join(contentDirectory, directory);
+  const matches = await globby(`${pathToDir}/*-${slug}.md`);
+  const filepath = matches.length > 0
+    ? matches[0]
+    : path.join(contentDirectory, directory, `${slug}.md`);
   return read({
     filepath,
     schema,
