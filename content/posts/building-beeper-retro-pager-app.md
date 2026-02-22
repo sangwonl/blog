@@ -3,7 +3,7 @@ external: false
 draft: false
 title: "삐삐 만들기: 초연결 시대에 단방향 설렘을 되살리다"
 description: 90년대 호출기를 스마트폰 앱으로 되살린 개발 회고. 서버리스 아키텍처, LCD UI 재현, 음성 메시지 파이프라인, 그리고 두 번째 바이브 코딩.
-date: 2026-02-22
+date: 2026-02-21
 tags: ["바이브코딩", "React Native", "Supabase", "회고"]
 ---
 
