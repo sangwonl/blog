@@ -7,6 +7,7 @@
 // Import the global.css file here so that it is included on
 import "../styles/global.css";
 
+import { ClientRouter } from 'astro:transitions';
 import GoogleFont from "./GoogleFont.astro";
 import FontAwesome from "./FontAwesome.astro";
 import ThemeScript from "./ThemeScript.astro";
@@ -40,13 +41,14 @@ const formattedDate = new Date(date).toLocaleDateString("en-us", {
     <GoogleFont />
     <ThemeScript />
     <FontAwesome />
+    <ClientRouter />
   </head>
 
   <body
     class="min-h-screen max-w-3xl mx-auto px-6 sm:px-8"
   >
     <Header />
-    <main id="main">
+    <main id="main" transition:animate="fade">
       <section class="blog-post prose max-w-none prose-sleek">
         <h1 class="m-0 mb-[0.25em]">{title}</h1>
         <div class="flex flex-wrap items-center gap-2 mb-[2em]">

@@ -5,7 +5,9 @@ import {
   SITE_DESCRIPTION,
   SITE_URL,
   TWITTER_HANDLE,
+  MY_NAME,
 } from "../config";
+import JsonLd from "./JsonLd.astro";
 
 export interface Props {
   title?: string;
@@ -63,3 +65,14 @@ const { meta, og, twitter } = getPageMeta({
   )
 }
 <!-- {twitter.url && <meta property="twitter:url" content={twitter.url} />} -->
+
+<JsonLd data={{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": SITE_TITLE,
+  "url": SITE_URL,
+  "author": {
+    "@type": "Person",
+    "name": MY_NAME,
+  },
+}} />

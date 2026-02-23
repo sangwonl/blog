@@ -96,7 +96,9 @@
     }
   }
 
-  customElements.define("mode-toggle", ModeToggle);
+  if (!customElements.get("mode-toggle")) {
+    customElements.define("mode-toggle", ModeToggle);
+  }
 </script>
 
 <style>

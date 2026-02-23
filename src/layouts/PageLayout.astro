@@ -9,6 +9,7 @@
 // Import the global.css file here so that it is included on
 import "../styles/global.css";
 
+import { ClientRouter } from 'astro:transitions';
 import GoogleFont from "./GoogleFont.astro";
 import FontAwesome from "./FontAwesome.astro";
 import ThemeScript from "./ThemeScript.astro";
@@ -29,13 +30,14 @@ import Footer from "../components/Footer.astro";
     <GoogleFont />
     <ThemeScript />
     <FontAwesome />
+    <ClientRouter />
   </head>
 
   <body
     class="min-h-screen max-w-3xl mx-auto px-6 sm:px-8"
   >
     <Header />
-    <main id="main">
+    <main id="main" transition:animate="fade">
       <slot name="main" />
     </main>
     <Footer />

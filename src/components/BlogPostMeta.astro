@@ -7,6 +7,7 @@ import {
   TWITTER_HANDLE,
   MY_NAME,
 } from "../config";
+import JsonLd from "./JsonLd.astro";
 
 export interface Props {
   title?: string;
@@ -88,3 +89,41 @@ const { meta, og, twitter } = getBlogPostMeta({
   )
 }
 <!-- {twitter.url && <meta property="twitter:url" content={twitter.url} />} -->
+
+<JsonLd data={[
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title || SITE_TITLE,
+    "datePublished": publishDate,
+    "author": {
+      "@type": "Person",
+      "name": MY_NAME,
+    },
+    ...(description ? { "description": description } : {}),
+    ...(pagePath ? { "url": new URL(pagePath, SITE_URL).toString() } : {}),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Posts",
+        "item": `${SITE_URL}/posts`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title || SITE_TITLE,
+      },
+    ],
+  },
+]} />

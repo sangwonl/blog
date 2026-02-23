@@ -1,0 +1,47 @@
+---
+import { Node } from "../lib/markdoc/node-helper";
+import type { RenderableTreeNodes } from "@markdoc/markdoc";
+import MarkdocRenderer from "./MarkdocRenderer.astro";
+
+type Components = Record<
+  string,
+  {
+    Component: any;
+    props: Record<string, string | number>;
+  }
+>;
+
+type Props = {
+  content: RenderableTreeNodes;
+  components?: Components;
+};
+
+const { content, components } = Astro.props;
+
+if (!content) {
+  throw new Error("Missing prop: content");
+}
+
+const node = new Node(content, components);
+node.validateElement();
+
+const Tag = node.tag;
+const props = node.props;
+const children = node.children;
+---
+
+{
+  node.shouldRenderChildren() ? (
+    <Fragment set:html={children}></Fragment>
+  ) : node.shouldRenderSelf() ? (
+    (content as any[]).map((element: any) => {
+      return <MarkdocRenderer content={element} components={components} />;
+    })
+  ) : node.shouldRenderTag() ? (
+    <Tag {...props}>
+      {node.hasChildren() ? (
+        <MarkdocRenderer content={children} components={components} />
+      ) : null}
+    </Tag>
+  ) : null
+}
