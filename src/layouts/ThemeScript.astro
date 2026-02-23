@@ -5,23 +5,36 @@
 ---
 
 <script is:inline>
-  // figure out user's preferred theme and set it as html class for tailwind before paint
   (function () {
-    if (typeof window !== "undefined") {
-      const isSystemColorSchemeDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      const storageTheme = localStorage.getItem("theme");
-      if (!storageTheme && isSystemColorSchemeDark) {
-        document.documentElement.classList.add("dark");
-        document.head.children.namedItem("theme-color").content = "#0e141b";
-      } else if (storageTheme === "dark") {
-        document.documentElement.classList.add("dark");
-        document.head.children.namedItem("theme-color").content = "#0e141b";
+    if (typeof window === "undefined") return;
+
+    function applyTheme(doc) {
+      var d = doc || document;
+      var isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var storageTheme = localStorage.getItem("theme");
+      var isDark = storageTheme === "dark" || (!storageTheme && isSystemDark);
+
+      if (isDark) {
+        d.documentElement.classList.add("dark");
       } else {
-        // we already server render light theme
-        document.head.children.namedItem("theme-color").content = "#ffffff";
+        d.documentElement.classList.remove("dark");
       }
+
+      var meta = d.head.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.content = isDark ? "#0e141b" : "#ffffff";
+      }
+    }
+
+    // Apply on initial / inline re-run
+    applyTheme();
+
+    // Preserve theme across View Transition page swaps
+    if (!window.__themeSwapListenerAdded) {
+      document.addEventListener("astro:before-swap", function (e) {
+        applyTheme(e.newDocument);
+      });
+      window.__themeSwapListenerAdded = true;
     }
   })();
 </script>

@@ -4,6 +4,5 @@
   "include": [".astro/types.d.ts", "**/*"],
   "compilerOptions": {
     "types": ["astro/client"],
-    "baseUrl": "."
   }
 }
