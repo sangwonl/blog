@@ -24,7 +24,7 @@ const sortedPosts = posts
 <PageLayout>
   <PageMeta title={`Blog | ${SITE_TITLE}`} slot="meta" />
   <section slot="main">
-    <ul>
+    <ul class="unset space-y-2">
       {
         sortedPosts.map((post) => {
           const formattedDate = new Date(
@@ -34,43 +34,47 @@ const sortedPosts = posts
             month: "short",
             day: "numeric",
           });
+          const href = post.frontmatter.external
+            ? post.frontmatter.url
+            : `${base}/posts/${post.slug}`;
+          const isExternal = post.frontmatter.external;
           return (
-            <li class="grid grid-cols-[1fr] md:grid-cols-[1fr_auto] mb-3 md:gap-2 items-start">
-              <div class="title">
-                {post.frontmatter.external ? (
-                  <a
-                    href={post.frontmatter.url}
-                    target="_blank"
-                    class="unset hover:text-text-link"
-                  >
-                    <span>{post.frontmatter.title}</span>
-                    <span>
-                      <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square pt-1" />
-                    </span>
-                  </a>
-                ) : (
-                  <a
-                    href={`${base}/posts/${post.slug}`}
-                    class="unset hover:text-text-link"
-                  >
+            <li class="group">
+              <a
+                href={href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                class="unset block rounded-lg px-4 py-3 -mx-4 transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-white/[0.04]"
+              >
+                <div class="flex items-baseline justify-between gap-4">
+                  <h3 class="font-medium text-text-heading group-hover:text-text-link transition-colors">
                     {post.frontmatter.title}
-                  </a>
+                    {isExternal && (
+                      <i class="ml-1.5 text-[10px] text-text-muted fa-solid fa-up-right-from-square" />
+                    )}
+                  </h3>
+                  <time
+                    datetime={post.frontmatter.date.toISOString()}
+                    class="shrink-0 text-sm text-text-muted tabular-nums"
+                  >
+                    {formattedDate}
+                  </time>
+                </div>
+                {post.frontmatter.description && (
+                  <p class="text-sm text-text-muted mt-1 line-clamp-1">
+                    {post.frontmatter.description}
+                  </p>
                 )}
                 {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
-                  <span class="ml-2">
+                  <div class="flex flex-wrap gap-1.5 mt-2">
                     {post.frontmatter.tags.map((tag) => (
-                      <span class="inline-block text-xs bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded px-1.5 py-0.5 mr-1">
+                      <span class="text-[11px] px-2 py-0.5 rounded-md bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                         {tag}
                       </span>
                     ))}
-                  </span>
+                  </div>
                 )}
-              </div>
-              <div class="text-text-muted text-sm italic">
-                <time datetime={post.frontmatter.date.toISOString()}>
-                  {formattedDate}
-                </time>
-              </div>
+              </a>
             </li>
           );
         })
