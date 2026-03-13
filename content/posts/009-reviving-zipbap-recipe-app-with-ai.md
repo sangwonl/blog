@@ -194,10 +194,10 @@ export interface Recipe {
 
 ### 마치며
 
-죽었던 앱이 [다시 살아났다](https://zipbap.netlify.app/). 아내가 열심히 모아뒀던 레시피에 다시 생명을 불어넣을 수 있어서 뿌듯하다.
+죽었던 앱이 [다시 살아났다](https://zipbap.pineple.com/). 아내가 열심히 모아뒀던 레시피에 다시 생명을 불어넣을 수 있어서 뿌듯하다.
 
 기술적으로 보면 AngularJS 1에서 Angular 20으로, Cordova에서 Capacitor로, Bower에서 npm으로, JavaScript에서 TypeScript로 — 프론트엔드 생태계 10년의 변화를 한 번에 건너뛴 셈이다. 이걸 사람 손으로 했다면 엄두도 못 냈을 것이고, 아마 영영 방치됐을 것이다.
 
 AI 코딩 에이전트가 새로운 프로젝트를 빠르게 만드는 데만 쓸모 있는 게 아니라, 이렇게 죽어가는 프로젝트를 되살리는 데도 힘을 발휘한다는 걸 느꼈다. 서랍 속에 잠자고 있는 사이드 프로젝트가 있다면, 한번 꺼내보는 건 어떨까. 생각보다 쉽게 다시 숨을 불어넣을 수 있을지도 모른다.
 
-**집밥 레시피**: [https://zipbap.netlify.app/](https://zipbap.netlify.app/)
+**집밥 레시피**: [https://zipbap.pineple.conm/](https://zipbap.pineple.com/)
