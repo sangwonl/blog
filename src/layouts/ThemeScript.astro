@@ -10,19 +10,23 @@
 
     function applyTheme(doc) {
       var d = doc || document;
-      var isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       var storageTheme = localStorage.getItem("theme");
-      var isDark = storageTheme === "dark" || (!storageTheme && isSystemDark);
+      var themes = ["light", "dark", "tty"];
+      var theme = themes.includes(storageTheme)
+        ? storageTheme
+        : "tty";
 
-      if (isDark) {
-        d.documentElement.classList.add("dark");
-      } else {
-        d.documentElement.classList.remove("dark");
-      }
+      d.documentElement.classList.remove("light", "dark", "tty");
+      d.documentElement.classList.add(theme);
 
       var meta = d.head.querySelector('meta[name="theme-color"]');
       if (meta) {
-        meta.content = isDark ? "#0e141b" : "#ffffff";
+        var themeColors = {
+          light: "#ffffff",
+          dark: "#0e141b",
+          tty: "#031109"
+        };
+        meta.content = themeColors[theme];
       }
     }
 

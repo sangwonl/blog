@@ -1,121 +1,126 @@
 ---
 ---
 
-<mode-toggle class="flex">
-  <button
-  class="justify-self-end bg-neutral-200 dark:bg-neutral-700 ml-4 inline-flex h-6 w-11 items-center rounded-full"
-  id="mode-toggle"
-  role="switch"
-  type="button"
-  tabindex="0"
-  aria-checked="false"
-  data-headlessui-state=""
-  ><span class="sr-only">Toggle dark mode</span><span
-    id="mode-circle"
-    class="light inline-block h-4 w-4 rounded-full bg-gradient-to-tr invisible"
-    ><span
-      class="absolute top-0 right-0 w-[10px] h-[10px] rounded-full bg-gray-700 scale-[0]"
-    ></span>
-  </span>
-</button>
-</mode-toggle>
+<theme-selector class="flex ml-4">
+  <div class="theme-options" role="group" aria-label="Theme">
+    <button type="button" data-theme="light" aria-pressed="false">Light</button>
+    <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+    <button type="button" data-theme="tty" aria-pressed="false">TTY</button>
+  </div>
+</theme-selector>
 
 <script>
-  function updateHTMLTheme(mode: "light" | "dark") {
-    const themeColorMetaTag = document.head.querySelector(
-      'meta[name="theme-color"]'
-    );
+  type Theme = "light" | "dark" | "tty";
 
-    if (mode === "dark") {
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
-      if (themeColorMetaTag) {
-        // @ts-ignore
-        themeColorMetaTag.content = "#0e141b";
-      }
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-      if (themeColorMetaTag) {
-        // @ts-ignore
-        themeColorMetaTag.content = "#ffffff";
-      }
-    }
-  }
-  function updateStorageTheme(mode: "light" | "dark") {
-    if (mode === "dark") {
-      localStorage.setItem("theme", "dark");
-    } else {
-      localStorage.setItem("theme", "light");
-    }
-  }
-  class ModeToggle extends HTMLElement {
-    constructor() {
-      super();
-      let currentMode: "light" | "dark" =
-        document.documentElement.classList.contains("dark") ? "dark" : "light";
+  const themeColors: Record<Theme, string> = {
+    light: "#ffffff",
+    dark: "#0e141b",
+    tty: "#031109",
+  };
 
-      const toggle = this.querySelector("button");
-      const iconElem = toggle?.querySelector("#mode-circle");
+  class ThemeSelector extends HTMLElement {
+    connectedCallback() {
+      const buttons = this.querySelectorAll<HTMLButtonElement>("[data-theme]");
 
-      if (iconElem) {
-        // set the toggle mode based on the html classname set in ThemeScript.astro
-        if (currentMode === "dark") {
-          iconElem.classList.remove("light");
-          iconElem.classList.add("dark");
-        }
-
-        // we load the toggle invisible to prevent flash
-        // remove visibility class after setting initial dark/light class
-        iconElem.classList.remove("invisible");
-
-        // Each time the button is clicked, update the count.
-        toggle?.addEventListener("click", () => {
-          if (currentMode === "dark") {
-            const modeToSwitch = "light";
-            iconElem.classList.remove("dark");
-            iconElem.classList.add("light");
-            updateHTMLTheme(modeToSwitch);
-            updateStorageTheme(modeToSwitch);
-            currentMode = modeToSwitch;
-          } else {
-            const modeToSwitch = "dark";
-            iconElem.classList.remove("light");
-            iconElem.classList.add("dark");
-            updateHTMLTheme(modeToSwitch);
-            updateStorageTheme(modeToSwitch);
-            currentMode = modeToSwitch;
-          }
-
-          // prevent slide animation on page load for dark mode
-          if (!iconElem.classList.contains("duration-300")) {
-            iconElem.classList.add("duration-300");
-          }
+      const updateSelection = (theme: Theme) => {
+        buttons.forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.theme === theme)
+          );
         });
-      }
+      };
+
+      const currentTheme = (): Theme => {
+        if (document.documentElement.classList.contains("tty")) return "tty";
+        if (document.documentElement.classList.contains("dark")) return "dark";
+        return "light";
+      };
+
+      updateSelection(currentTheme());
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const theme = button.dataset.theme as Theme;
+          document.documentElement.classList.remove("light", "dark", "tty");
+          document.documentElement.classList.add(theme);
+          localStorage.setItem("theme", theme);
+
+          const meta = document.head.querySelector<HTMLMetaElement>(
+            'meta[name="theme-color"]'
+          );
+          if (meta) meta.content = themeColors[theme];
+
+          updateSelection(theme);
+        });
+      });
     }
   }
 
-  if (!customElements.get("mode-toggle")) {
-    customElements.define("mode-toggle", ModeToggle);
+  if (!customElements.get("theme-selector")) {
+    customElements.define("theme-selector", ThemeSelector);
   }
 </script>
 
 <style>
-  .light {
-    transform: translateX(0.25rem);
-    background-image: linear-gradient(
-      to top right,
-      #f97316,
-      #f97316
-    );
+  .theme-options {
+    display: inline-grid;
+    grid-template-columns: repeat(3, auto);
+    overflow: hidden;
+    border: 1px solid rgb(var(--color-text-muted) / 0.45);
+    border-radius: 0.25rem;
   }
-  .dark {
-    transform: translateX(1.5rem);
-    background-image: linear-gradient(
-      to top right,
-      #facc15,
-      #facc15
-    );
+
+  button {
+    min-width: 2.65rem;
+    padding: 0.2rem 0.4rem;
+    border-left: 1px solid rgb(var(--color-text-muted) / 0.35);
+    color: rgb(var(--color-text-muted));
+    background: transparent;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 150ms ease, background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  button:first-child {
+    border-left: 0;
+  }
+
+  button:hover,
+  button:focus-visible {
+    color: rgb(var(--color-text-link));
+    background: rgb(var(--color-primary-main) / 0.08);
+  }
+
+  button:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: 2px solid rgb(var(--color-text-link));
+    outline-offset: -2px;
+  }
+
+  button[aria-pressed="true"] {
+    color: rgb(var(--color-text-selection));
+    background: rgb(var(--color-bg-selection));
+  }
+
+  :global(html.tty) button[aria-pressed="true"] {
+    color: rgb(var(--color-text-heading));
+    background: rgb(var(--color-primary-main) / 0.12);
+    box-shadow: inset 0 0 0 1px rgb(var(--color-primary-main) / 0.75),
+      0 0 0.7rem rgb(var(--color-primary-main) / 0.28);
+    text-shadow: 0 0 0.35rem rgb(var(--color-primary-main) / 0.65);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button {
+      transition: none;
+    }
   }
 </style>
