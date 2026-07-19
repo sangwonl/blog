@@ -25,6 +25,15 @@ test("the selector exposes accessible Light, Dark, and TTY choices", async () =>
   assert.match(source, /localStorage\.setItem\("theme"/);
 });
 
+test("the theme selector lives in the footer instead of the header", async () => {
+  const header = await readSource("src/components/Header.astro");
+  const footer = await readSource("src/components/Footer.astro");
+
+  assert.doesNotMatch(header, /DarkModeToggle/);
+  assert.match(footer, /import DarkModeToggle/);
+  assert.match(footer, /<DarkModeToggle\s*\/>/);
+});
+
 test("TTY styles define terminal tokens, typography, and a safe scanline overlay", async () => {
   const source = await readSource("src/styles/global.css");
 

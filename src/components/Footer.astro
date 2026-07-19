@@ -1,7 +1,9 @@
 ---
+import DarkModeToggle from "./DarkModeToggle.astro";
 ---
 
 <footer class="text-sm leading-[1.75] mt-4">
+  <DarkModeToggle />
   <div class="text-text-muted">
     &copy; {new Date().getFullYear()} gamz. All rights reserved.
   </div>
@@ -14,6 +16,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
 </style>

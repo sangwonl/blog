@@ -1,6 +1,5 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import DarkModeToggle from "./DarkModeToggle.astro";
 ---
 
 <header>
@@ -43,16 +42,12 @@ import DarkModeToggle from "./DarkModeToggle.astro";
       <span class="fa-sr-only">Twitter</span>
     </a>
   </div>
-  <DarkModeToggle />
 </header>
 <style>
   header {
     grid-area: header;
     display: grid;
     align-items: center;
-    grid-template-columns: minmax(0, 1fr) minmax(0, max-content) minmax(
-        0,
-        max-content
-      );
+    grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
   }
 </style>
