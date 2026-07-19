@@ -7,6 +7,6 @@ description: "AI 기반 외국어 학습 앱. 읽기/듣기/쓰기/말하기를 
 stack:
   - React
   - NestJS
-  - PostgreSQL
+  - Gemini
 status: active
 ---

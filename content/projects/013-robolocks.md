@@ -6,8 +6,7 @@ url: https://robolocks.pineple.com
 description: "코딩 로봇 배틀 시뮬레이션 게임. Python 봇을 작성해 deterministic 탱크 전투를 실험하고 3D 리플레이로 확인."
 stack:
   - C++
-  - WebAssembly
-  - React
+  - WASM
   - Three.js
 status: active
 ---
