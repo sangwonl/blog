@@ -7,5 +7,5 @@ github: https://github.com/sangwonl/python-mpegdash
 description: "MPEG-DASH MPD(Media Presentation Description) 파싱을 위한 오픈소스 라이브러리."
 stack:
   - Python
-status: archived
+status: active
 ---
