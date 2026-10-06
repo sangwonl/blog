@@ -1,5 +1,5 @@
 ---
-draft: false
+draft: true
 title: 만사옥
 date: 2026-07-17
 url: https://mansaok.pineple.com
